@@ -6,11 +6,11 @@
         xmlns:control="clr-namespace:WpfChosenControl;assembly=WpfChosenControl"
         xmlns:local="clr-namespace:WpfChoosenControlDemo"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="525">
+        Title="MainWindow" Height="400" Width="520">
     <Window.Resources>
         <local:MainModel x:Key="viewmodel"/>
     </Window.Resources>
-    <Grid Margin="100,160" DataContext="{StaticResource viewmodel}">
+    <Grid Margin="100,160,98,160" DataContext="{StaticResource viewmodel}">
         <control:ChosenControl SelectedItems="{Binding Students}"  DefaultMessage="Please Select Items." ItemsSource="{Binding Items}" ValueMemberPath="Id"   DisplayMemberPath="Name"  />
     </Grid>
 </Window>

@@ -24,53 +24,185 @@
         </Style>
 
         <SolidColorBrush x:Key="backColor" Color="#00b5f0"/>
-        <Style x:Key="myStyle" TargetType="{x:Type ScrollViewer}">
-            <Setter Property="OverridesDefaultStyle" Value="True" />
+        <!-- new style starts here  -->
+        <Style x:Key="ScrollBarThumb" TargetType="{x:Type Thumb}">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="IsTabStop" Value="false"/>
+            <Setter Property="Focusable" Value="false"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ScrollViewer}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <ScrollContentPresenter Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-                            <ScrollBar
-                        Style="{StaticResource myScrollBarStyle}"
-                        Name="PART_VerticalScrollBar"
-                        Grid.Column="1"
-                        Value="{TemplateBinding VerticalOffset}"
-                        Maximum="{TemplateBinding ScrollableHeight}"
-                        ViewportSize="{TemplateBinding ViewportHeight}"
-                        Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" />
-                            <ScrollBar 
-                        Style="{StaticResource myScrollBarStyle}"
-                        Name="PART_HorizontalScrollBar"
-                        Orientation="Horizontal"
-                        Grid.Row="1"
-                        Value="{TemplateBinding HorizontalOffset}"
-                        Maximum="{TemplateBinding ScrollableWidth}"
-                        ViewportSize="{TemplateBinding ViewportWidth}"
-                        Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" />
-                            <Rectangle
-                                    Fill="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" 
-                                     Opacity="0.4"
-                                   Grid.Column="1" 
-                                    Grid.Row="1"/>
-                        </Grid>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Border CornerRadius="2" Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" />
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-    </UserControl.Resources>
-    <Grid Name="rootGrid">
+        <!-- Fill Brushes -->
+       
+    
+        <SolidColorBrush x:Key="PressedBrush" Color="#FFEEEEEE"/>
 
-        <ComboBox Height="{Binding Path=Height,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" 
-        x:Name="MultiSelectCombo"  
+        <SolidColorBrush x:Key="DisabledForegroundBrush" Color="#888" />
+
+        <!-- Border Brushes -->
+        <Style x:Key="ScrollBarLineButton" TargetType="{x:Type RepeatButton}">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                        <Border Name="Border" CornerRadius="2"  Background="White"
+                              BorderBrush="{StaticResource backColor}" >
+                            <Path HorizontalAlignment="Center" VerticalAlignment="Center" Fill="{StaticResource backColor}"
+                                Data="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" 
+                                Opacity="{Binding Path=Opacity, RelativeSource={RelativeSource TemplatedParent}}"  />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource PressedBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            
+        </Style>
+        <Style x:Key="ItemsSource_Horizontal" TargetType="{x:Type ItemsControl}" >
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value >
+                    <ControlTemplate>
+                        <Grid >
+                            <ScrollViewer x:Name="scrollviewer" >
+                                <ScrollViewer.Template>
+                                    <ControlTemplate TargetType="{x:Type ScrollViewer}" >
+                                        <Grid>
+                                            <ScrollBar x:Name="PART_HorizontalScrollBar" Orientation="Horizontal" 
+                                                               Value="{TemplateBinding HorizontalOffset}"
+                                                               Maximum="{TemplateBinding ScrollableWidth}"
+                                                               ViewportSize="{TemplateBinding ViewportWidth}"
+                                                               Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                                       Background="White"
+                                                       Height="100"
+                                                               >
+                                                <ScrollBar.Template>
+                                                    <ControlTemplate>
+                                                        <Track x:Name="PART_Track" Margin="0,0,0,54">
+                                                            <!--<Track.DecreaseRepeatButton>
+                                                                <RepeatButton Command="ScrollBar.PageLeftCommand"
+						                                                    Style="{StaticResource ScrollBarPageButton}"/>
+                                                            </Track.DecreaseRepeatButton>
+                                                            <Track.IncreaseRepeatButton>
+                                                                <RepeatButton Command="ScrollBar.PageRightCommand"
+						                                                    Style="{StaticResource ScrollBarPageButton}"/>
+                                                            </Track.IncreaseRepeatButton>-->
+                                                            <Track.Thumb>
+                                                                <Thumb Style="{StaticResource ScrollBarThumb}" 
+                                                                         Background="Gray" Opacity="0" Margin="0,-1" />
+                                                            </Track.Thumb>
+                                                        </Track>
+                                                    </ControlTemplate>
+                                                </ScrollBar.Template>
+
+                                            </ScrollBar>
+                                            <ScrollContentPresenter Margin="0,2" Height="Auto" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </ScrollViewer.Template>
+                                <ItemsPresenter/>
+                            </ScrollViewer>
+                            <Grid x:Name="Panel" Margin="0,2" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <RepeatButton x:Name="LineLeftButton" Grid.Column="0" Width="20" Opacity="0" Visibility="Collapsed"
+                                      Style="{StaticResource ScrollBarLineButton}"
+                                      Content="M 8 0 L 8 32 L 0 16 Z"       
+                                      Command="{x:Static ScrollBar.LineLeftCommand}"       
+                                      CommandTarget="{Binding ElementName=scrollviewer}"
+                                      ClickMode="Hover" />
+                                <RepeatButton x:Name="LineRightButton" Grid.Column="2" Width="20" Opacity="0" Visibility="Collapsed"
+                                      Style="{StaticResource ScrollBarLineButton}"
+                                      Content="M 0 0 L 8 16 L 0 32 Z" 
+                                      Command="{x:Static ScrollBar.LineRightCommand}"       
+                                      CommandTarget="{Binding ElementName=scrollviewer}"
+                                      ClickMode="Hover"/>
+                            </Grid>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                    <Condition Property="ComputedHorizontalScrollBarVisibility" SourceName="scrollviewer" Value="Visible"/>
+                                </MultiTrigger.Conditions>
+                                <MultiTrigger.Setters>
+                                    <Setter TargetName="LineLeftButton" Property="Visibility" Value="Visible" />
+                                    <Setter TargetName="LineRightButton" Property="Visibility" Value="Visible" />
+                                </MultiTrigger.Setters>
+                                <MultiTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="LineLeftButton" 
+                                                             Storyboard.TargetProperty="Opacity" To="0.8" Duration="0:0:0.25"/>
+                                            <DoubleAnimation Storyboard.TargetName="LineRightButton" 
+                                                             Storyboard.TargetProperty="Opacity" To="0.8" Duration="0:0:0.25"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </MultiTrigger.EnterActions>
+                                <MultiTrigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="LineLeftButton" 
+                                                             Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25"/>
+                                            <DoubleAnimation Storyboard.TargetName="LineRightButton" 
+                                                             Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </MultiTrigger.ExitActions>
+                            </MultiTrigger>
+                            
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemsPanel">
+                <Setter.Value >
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="HasItems" Value="false"   >
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <TextBlock HorizontalAlignment="Center" Foreground="{StaticResource backColor}" VerticalAlignment="Center" FontSize="13" FontWeight="Bold" Text="{Binding Path=DefaultMessage,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </UserControl.Resources>
+  
+
+        <ComboBox DataContext="{Binding}" Height="{Binding Path=Height,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" 
+        x:Name="rootcombobox"  
         SnapsToDevicePixels="True"
         OverridesDefaultStyle="True"
         ScrollViewer.HorizontalScrollBarVisibility="Auto"
@@ -114,59 +246,58 @@
                                         <Border  x:Name="Border"   Grid.ColumnSpan="2"    CornerRadius="2"  Background="White"      BorderBrush="{StaticResource backColor}"  BorderThickness="1" />
 
                                         <Border  x:Name="BorderComp" Grid.Column="0" CornerRadius="2"    Margin="3"  Background="White" BorderBrush="Blue" BorderThickness="0,0,0,0" >
-                                            <ScrollViewer HorizontalScrollBarVisibility="Auto" KeyboardNavigation.DirectionalNavigation="Contained" VerticalScrollBarVisibility="Hidden" Style="{StaticResource myStyle}">
-                                                <ScrollViewer.Resources>
-                                                    <sys:Double x:Key="{x:Static SystemParameters.HorizontalScrollBarHeightKey}">7</sys:Double>
-                                                </ScrollViewer.Resources>
-                                                <ItemsControl x:Name="ChipsHolder" ItemsSource="{Binding Path=DataContext,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid,AncestorLevel=4}}">
+                                            <!---->
+                                            <ItemsControl x:Name="ChipsHolder" Style="{StaticResource ItemsSource_Horizontal}" ItemsSource="{Binding Path=DataContext, Mode=TwoWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ComboBox}}" >
                                                     <ItemsControl.ItemTemplate>
                                                         <DataTemplate>
                                                             <!-- chips control starts here -->
-                                                            <Border BorderBrush="{StaticResource backColor}" Margin="2" Height="25"  CornerRadius="12,12,12,12" Background="{StaticResource backColor}">
-                                                                <Grid Margin="3,0,3,0">
-                                                                    <Grid.ColumnDefinitions>
-                                                                        <ColumnDefinition Width="*"/>
-                                                                        <ColumnDefinition Width="*"/>
-                                                                    </Grid.ColumnDefinitions>
-                                                                    <Label Grid.Column="0" Tag="{Binding}" Foreground="White" VerticalAlignment="Center">
-                                                                        <MultiBinding Converter="{StaticResource pc}">
-                                                                            <MultiBinding.Bindings>
-                                                                                <Binding  Path="DisplayMemberPath" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=UserControl}"/>
-                                                                                <!-- Bind to parameter 1 here -->
-                                                                                <Binding Path="Tag" RelativeSource="{RelativeSource self}"  />
-                                                                                <!-- Bind to parameter 2 here -->
-                                                                            </MultiBinding.Bindings>
-                                                                        </MultiBinding>
-                                                                    </Label>
-                                                                    <Button Cursor="Hand"   Grid.Column="1" Tag="{Binding}" Foreground="White"  VerticalAlignment="Center" Command="{Binding Path=RemoveCommand,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                            <Border BorderBrush="{StaticResource backColor}" Margin="2" Height="25"  CornerRadius="12,12,12,12" Background="{StaticResource backColor}">
+                                                <Grid Margin="3,0,3,0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Label Grid.Column="0" Tag="{Binding}" Foreground="White" VerticalAlignment="Center">
+                                                        <MultiBinding Converter="{StaticResource pc}">
+                                                            <MultiBinding.Bindings>
+                                                                <Binding  Path="DisplayMemberPath" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=UserControl}"/>
+                                                                <!--Bind to parameter 1 here-->
+                                                                <Binding Path="Tag" RelativeSource="{RelativeSource self}"  />
+                                                                <!-- Bind to parameter 2 here -->
+
+                                                            </MultiBinding.Bindings>
+                                                        </MultiBinding>
+                                                    </Label>
+                                                    <Button Cursor="Hand"   Grid.Column="1" Tag="{Binding}" Foreground="White"  VerticalAlignment="Center" Command="{Binding Path=RemoveCommand,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
                                                                               CommandParameter="{Binding}"
                                                                         >
-                                                                        <Button.Template>
-                                                                            <ControlTemplate  TargetType="{x:Type Button}">
-                                                                                <ContentPresenter  Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                                            </ControlTemplate>
-                                                                        </Button.Template>
-                                                                        <Button.Content>
-                                                                            <Viewbox Width="20" Height="20">
-                                                                                <Canvas Width="24" Height="24">
-                                                                                    <Path Data="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z" Fill="White" />
-                                                                                </Canvas>
-                                                                            </Viewbox>
-                                                                        </Button.Content>
+                                                        <Button.Template>
+                                                            <ControlTemplate  TargetType="{x:Type Button}">
+                                                                <ContentPresenter  Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                            </ControlTemplate>
+                                                        </Button.Template>
+                                                        <Button.Content>
+                                                            <Viewbox Width="20" Height="20">
+                                                                <Canvas Width="24" Height="24">
+                                                                    <Path Data="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z" Fill="White" />
+                                                                </Canvas>
+                                                            </Viewbox>
+                                                        </Button.Content>
 
-                                                                    </Button>
+                                                    </Button>
 
-                                                                </Grid>
-                                                            </Border>
-                                                            <!-- chips control ends here -->
+                                                </Grid>
+                                            </Border>
+                                            <!-- chips control ends here -->
                                                         </DataTemplate>
                                                     </ItemsControl.ItemTemplate>
+                                                  
                                                     <ItemsControl.ItemsPanel>
                                                         <ItemsPanelTemplate>
-                                                            <StackPanel Orientation="Horizontal"/>
-                                                        </ItemsPanelTemplate>
+                                                        <StackPanel Name="Panel" Orientation="Horizontal"/>
+                                                    </ItemsPanelTemplate>
                                                     </ItemsControl.ItemsPanel>
-                                                    <ItemsControl.Style>
+                                                    <!--<ItemsControl.Style>
                                                         <Style TargetType="ItemsControl">
                                                             <Style.Triggers>
                                                                 <Trigger Property="HasItems" Value="false"   >
@@ -180,11 +311,11 @@
                                                                 </Trigger>
                                                             </Style.Triggers>
                                                         </Style>
-                                                    </ItemsControl.Style>
+                                                    </ItemsControl.Style>-->
                                                 </ItemsControl>
-                                            </ScrollViewer>
+                                          
                                         </Border>
-                                        <Border Grid.Column="1" BorderBrush="#00b5f0" BorderThickness="1,0,0,0" >
+                                        <Border Cursor="Hand" Grid.Column="1" BorderBrush="#00b5f0" BorderThickness="1,0,0,0" >
                                             <Path  x:Name="Arrow"   Fill="#00b5f0"    HorizontalAlignment="Center"   VerticalAlignment="Center"  Data="M 0 0 L 4 4 L 8 0 Z" Height="11" Stretch="Fill" Width="11"/>
                                         </Border>
                                     </Grid>
@@ -242,5 +373,4 @@
             </ComboBox.Template>
         </ComboBox>
 
-    </Grid>
 </UserControl>

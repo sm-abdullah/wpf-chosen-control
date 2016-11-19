@@ -43,19 +43,21 @@ namespace WpfChoosenControlDemo
 
         public MainModel()
         {
-            Items = new ObservableCollection<Student>();
-            Items.Add(new Student() { Id = 1, Name = "Ali" });
-            Items.Add(new Student() { Id = 2, Name = "Ammad" });
-            Items.Add(new Student() { Id = 3, Name = "Waseem" });
-            Items.Add(new Student() { Id = 4, Name = "Hakan" });
-            Items.Add(new Student() { Id = 5, Name = "Asim" });
-            Items.Add(new Student() { Id = 6, Name = "Nouman" });
-            Items.Add(new Student() { Id = 7, Name = "Kashif" });
-            Items.Add(new Student() { Id = 8, Name = "Raees" });
-            Students = new List<Student>();
-            Students.Add(Items.First());
-            Students.Add(Items.LastOrDefault());
+            var items = new ObservableCollection<Student>();
+            items.Add(new Student() { Id = 1, Name = "Ali" });
+            items.Add(new Student() { Id = 2, Name = "Ammad" });
+            items.Add(new Student() { Id = 3, Name = "Waseem" });
+            items.Add(new Student() { Id = 4, Name = "Hakan" });
+            items.Add(new Student() { Id = 5, Name = "Asim" });
+            items.Add(new Student() { Id = 6, Name = "Nouman" });
+            items.Add(new Student() { Id = 7, Name = "Kashif" });
+            items.Add(new Student() { Id = 8, Name = "Raees" });
+            Items = items;
+            var students = new List<Student>();
+            students.Add(Items.First());
+            students.Add(Items.LastOrDefault());
 
+            this.Students = students;
         }
 
         private void Submit()

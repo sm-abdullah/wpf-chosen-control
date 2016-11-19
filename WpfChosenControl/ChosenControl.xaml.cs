@@ -58,7 +58,7 @@ namespace WpfChosenControl
         {
             var control = (ChosenControl)d;
             control._SelectedDataItems = new ObservableCollection<object>();
-            control.rootGrid.DataContext = control._SelectedDataItems;
+            control.rootcombobox.DataContext = control._SelectedDataItems;
             if (control.ItemsSource != null)
             {
                 control.SelectNodes();
@@ -295,7 +295,7 @@ namespace WpfChosenControl
             {
                 _nodeList.Add(new Node(item));
             }
-            MultiSelectCombo.ItemsSource = _nodeList;
+            rootcombobox.ItemsSource = _nodeList;
 
 
         }
