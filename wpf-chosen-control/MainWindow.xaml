@@ -11,6 +11,6 @@
         <local:MainModel x:Key="viewmodel"/>
     </Window.Resources>
     <Grid Margin="100,160" DataContext="{StaticResource viewmodel}">
-        <control:ChosenControl SelectedItems="{Binding Students}"  DefaultMessage="Please Select Items." ItemsSource="{Binding Items}"  ValueMemberPath="Id" DisplayMemberPath="Name"  />
+        <control:ChosenControl SelectedItems="{Binding Students}"  DefaultMessage="Please Select Items." ItemsSource="{Binding Items}" ValueMemberPath="Id"   DisplayMemberPath="Name"  />
     </Grid>
 </Window>

@@ -52,3 +52,17 @@ E:\GIT\wpf-chosen-control\wpf-chosen-control\wpf-chosen-control\obj\Debug\WpfCho
 E:\GIT\wpf-chosen-control\wpf-chosen-control\bin\Debug\WpfChoosenControlDemo.exe.config
 E:\GIT\wpf-chosen-control\wpf-chosen-control\obj\Debug\WpfChoosenControlDemo.exe
 E:\GIT\wpf-chosen-control\wpf-chosen-control\obj\Debug\WpfChoosenControlDemo.pdb
+E:\GIT\wpf-chosen-control\wpf-chosen-control\bin\Debug\WpfChoosenControlDemo.exe
+E:\GIT\wpf-chosen-control\wpf-chosen-control\bin\Debug\WpfChoosenControlDemo.pdb
+E:\GIT\wpf-chosen-control\wpf-chosen-control\bin\Debug\WpfChosenControl.dll
+E:\GIT\wpf-chosen-control\wpf-chosen-control\bin\Debug\WpfChosenControl.pdb
+E:\GIT\wpf-chosen-control\wpf-chosen-control\obj\Debug\wpf-chosen-control-demo.csprojResolveAssemblyReference.cache
+E:\GIT\wpf-chosen-control\wpf-chosen-control\obj\Debug\MainWindow.g.cs
+E:\GIT\wpf-chosen-control\wpf-chosen-control\obj\Debug\App.g.cs
+E:\GIT\wpf-chosen-control\wpf-chosen-control\obj\Debug\GeneratedInternalTypeHelper.g.cs
+E:\GIT\wpf-chosen-control\wpf-chosen-control\obj\Debug\WpfChoosenControlDemo_MarkupCompile.cache
+E:\GIT\wpf-chosen-control\wpf-chosen-control\obj\Debug\WpfChoosenControlDemo_MarkupCompile.lref
+E:\GIT\wpf-chosen-control\wpf-chosen-control\obj\Debug\MainWindow.baml
+E:\GIT\wpf-chosen-control\wpf-chosen-control\obj\Debug\WpfChoosenControlDemo.g.resources
+E:\GIT\wpf-chosen-control\wpf-chosen-control\obj\Debug\WpfChoosenControlDemo.Properties.Resources.resources
+E:\GIT\wpf-chosen-control\wpf-chosen-control\obj\Debug\wpf-chosen-control-demo.csproj.GenerateResource.Cache

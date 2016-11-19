@@ -241,19 +241,39 @@ namespace WpfChosenControl
             {
                 foreach (var v in SelectedItems)
                 {
+                    _SelectedDataItems.Add(v);
                     try
                     {
-                        _SelectedDataItems.Add(v);
-                        Node node = _nodeList.FirstOrDefault(i => GetValueByPropertyName(ValueMemberPath, i.DataModel).Equals(GetValueByPropertyName(ValueMemberPath, v)));
-                        if (node != null)
-                            node.IsSelected = true;
+                        //If value member path is Null then use default object equality
+                        if (string.IsNullOrWhiteSpace(ValueMemberPath))
+                        {
+                            var node = _nodeList.FirstOrDefault(i => i.DataModel.Equals(v));
+                            if (node != null)
+                            {
+                                node.IsSelected = true;
+                            }
+                        }
+                        else
+                        {
+                            //else identify the object by ValueMemeberPath property
+                            var node = _nodeList.FirstOrDefault(i => GetValueByPropertyName(ValueMemberPath, i.DataModel).Equals(GetValueByPropertyName(ValueMemberPath, v)));
+                            if (node != null)
+                            {
+                                node.IsSelected = true;
+                            }
+                        }
+                       
                     }
-                    catch (Exception exception)
+                    catch (Exception)
                     {
+                      //Ignore the Exception 
                     }
                 }
             }
-            catch (Exception) { }
+            catch (Exception)
+            {
+                //Ignore the Exception
+            }
         }
 
         private object GetValueByPropertyName(string name, object dataModel)
