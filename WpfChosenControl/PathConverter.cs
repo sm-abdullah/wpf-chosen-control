@@ -23,7 +23,7 @@ namespace WpfChosenControl
                 }
                 catch (Exception exception)
                 {
-                    return node.DataModel.GetType().ToString();
+                    return node.DataModel.GetType().Name.ToString();
                 }
             }
             else
@@ -37,7 +37,7 @@ namespace WpfChosenControl
                 }
                 catch (Exception exception)
                 {
-                  return  values[1].GetType().ToString();
+                  return  values[1].GetType().Name.ToString();
                 }
             }
         }
